@@ -68,15 +68,22 @@ pass2_fs_dither(j_decompress_ptr cinfo,
 			* for either sign of the error value.
 			* Note: errorptr points to *previous* column's array entry.
 			*/
+
+			std::cout << "col " << col << " row " << row << " cur0 " << cur0 << " cur1 " << cur1 << " cur2 " << cur2 << std::endl;
+
 			cur0 = RIGHT_SHIFT(cur0 + errorptr[dir3 + 0] + 8, 4);
 			cur1 = RIGHT_SHIFT(cur1 + errorptr[dir3 + 1] + 8, 4);
 			cur2 = RIGHT_SHIFT(cur2 + errorptr[dir3 + 2] + 8, 4);
 			/* Limit the error using transfer function set by init_error_limit.
 			* See comments with init_error_limit for rationale.
 			*/
+			
 			cur0 = error_limit[cur0];
 			cur1 = error_limit[cur1];
 			cur2 = error_limit[cur2];
+
+			std::cout << "   post-error cur0 " << cur0 << " cur1 " << cur1 << " cur2 " << cur2 << std::endl;
+
 			/* Form pixel value + error, and range-limit to 0..MAXJSAMPLE.
 			* The maximum error is +- MAXJSAMPLE (or less with error limiting);
 			* this sets the required size of the range_limit array.
@@ -87,6 +94,9 @@ pass2_fs_dither(j_decompress_ptr cinfo,
 			cur0 = GETJSAMPLE(range_limit[cur0]);
 			cur1 = GETJSAMPLE(range_limit[cur1]);
 			cur2 = GETJSAMPLE(range_limit[cur2]);
+
+			std::cout << "   post-range cur0 " << cur0 << " cur1 " << cur1 << " cur2 " << cur2 << std::endl;
+
 			/* Index into the cache with adjusted pixel value */
 			cachep = &histogram[cur0 >> C0_SHIFT][cur1 >> C1_SHIFT][cur2 >> C2_SHIFT];
 			/* If we have not seen this color before, find nearest colormap */
@@ -101,6 +111,10 @@ pass2_fs_dither(j_decompress_ptr cinfo,
 			cur1 -= GETJSAMPLE(colormap1[pixcode]);
 			cur2 -= GETJSAMPLE(colormap2[pixcode]);
 			}
+			std::cout << "   post-colormap cur0 " << cur0 << " cur1 " << cur1 << " cur2 " << cur2 << std::endl;
+			std::cout << "   post-colormap bpreverr0 " << bpreverr0 << " bpreverr1 " << bpreverr1 << " bpreverr2 " << bpreverr2 << std::endl;
+			std::cout << "   post-colormap belowerr0 " << belowerr0 << " belowerr1 " << belowerr1 << " belowerr2 " << belowerr2 << std::endl;
+
 			/* Compute error fractions to be propagated to adjacent pixels.
 			* Add these into the running sums, and simultaneously shift the
 			* next-line error sums left by 1 column.
@@ -139,6 +153,8 @@ pass2_fs_dither(j_decompress_ptr cinfo,
 			inptr += dir3;        /* Advance pixel pointers to next column */
 			outptr += dir;
 			errorptr += dir3;     /* advance errorptr to current column */
+
+			std::cout << "   last cur0 " << cur0 << " cur1 " << cur1 << " cur2 " << cur2 << std::endl;
 		}
 		/* Post-loop cleanup: we must unload the final error values into the
 		* final fserrors[] entry.  Note we need not unload belowerrN because
