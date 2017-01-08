@@ -47,7 +47,7 @@ BCryptHash::BCryptHash(LPCWSTR algorithm, LPCWSTR implementation, ULONG flags)
 	if (!NT_SUCCESS(ntstatus))
 		throw std::runtime_error("Unable to get hash length");
 
-	hash_length_ = HashLength;
+	hash_length_ = static_cast<int>(HashLength);
 }
 
 void BCryptHash::ComputeHash(const void * buffer, size_t length, void * hash, size_t hash_length)
