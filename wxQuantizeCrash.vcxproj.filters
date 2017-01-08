@@ -28,6 +28,9 @@
     <ClInclude Include="wxQuantizeCrash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="quantize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -40,6 +43,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="quantize.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pass2_fs_dither.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
