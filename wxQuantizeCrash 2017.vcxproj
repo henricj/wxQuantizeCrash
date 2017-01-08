@@ -193,6 +193,7 @@
     <ClCompile Include="wxQuantizeCrash.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="pass2_fs_dither-no_volatile-annotated.asm" />
     <None Include="ReadMe.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
